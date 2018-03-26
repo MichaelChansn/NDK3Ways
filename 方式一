@@ -1,0 +1,13 @@
+方式一：
+1.jni源码存放目录src/main/jni
+2.在工程的根目录的gradle.properties中配置android.useDeprecatedNdk=true
+3.在jni所在lib的build.gradle中配置ndk相关，如：
+    ndk {
+            moduleName "jnicrash"
+            ldLibs "log", "z", "m"
+            stl "stlport_static"
+            cFlags "-Wall -Wno-unused-parameter -std=gnu99"
+            abiFilters "armeabi-v7a"
+        }
+
+不需要Android.mk文件，会根据ndk的配置自动生成Android.mk文件。

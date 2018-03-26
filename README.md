@@ -1,2 +1,2 @@
 # NDK3Ways
-android studio三种使用ndk的方式
+3种使用NDK的方式

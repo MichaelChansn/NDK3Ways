@@ -1,0 +1,29 @@
+方式三 使用cmake形式：
+1.jni源码存放目录src/main/xxx(自定义，一般为jni or cpp)
+2.在jni所在lib的build.gradle中配置cmake设置，如：
+     externalNativeBuild {
+        cmake {
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
+    可通过在jni源码目录上右键-->Link C++ Project with Gradle 自动添加
+    
+3.在jni所在lib的build.gradle中配置cmake编译选项设置，如：
+    externalNativeBuild {
+            // cmake不会压缩裁剪生成的so库，android打包工具把so打包进apk的时候才会做
+            cmake {
+                abiFilters "armeabi-v7a"
+                cFlags "-Wall", "-Wno-unused-parameter", "-std=gnu99"
+                // 使用这个stlport_static 会减小so体积
+                arguments  "-DANDROID_STL=stlport_static"
+            }
+        }
+    基本上可以覆盖之前方式二的ndk配置，所以ndk配置在这里可选
+    
+4.在jni所在lib的build.gradle中配置ndk相关，如：
+    ndk {
+            abiFilters "armeabi-v7a"
+        }
+ 在这里ndk配置属于可选项，有其他需要配的属性才设置。
+
+不需要Android.mk文件，根据cmake文件进行编译。

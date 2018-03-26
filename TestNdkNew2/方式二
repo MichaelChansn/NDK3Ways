@@ -1,0 +1,21 @@
+方式二 使用ndk-build形式：
+1.jni源码存放目录src/main/xxx(自定义，一般为jni or cpp)
+2.在jni所在lib的build.gradle中配置Android.mk的路径，如：
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/cpp/Android.mk'
+        }
+    }
+    可通过在jni源码目录上右键-->Link C++ Project with Gradle 自动添加
+    
+3.在jni所在lib的build.gradle中配置ndk相关，如：
+    ndk {
+            moduleName "jnicrash"
+            ldLibs "log", "z", "m"
+            stl "stlport_static"
+            cFlags "-Wall -Wno-unused-parameter -std=gnu99"
+            abiFilters "armeabi-v7a"
+        }
+
+
+需要Android.mk文件，根据Android.mk文件进行编译，类似于之前的eclipse上使用的方式。
